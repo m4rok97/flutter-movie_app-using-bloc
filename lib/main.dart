@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'data/providers/movie_provider.dart';
+import 'graphql/now_playing_movies.graphql.dart';
 import 'graphql/popular_movies.graphql.dart';
 
 void main() => runApp(MyApp());
@@ -17,23 +18,68 @@ class MyApp extends StatelessWidget {
           title: Text('Material App Bar'),
         ),
         body: Center(
-            child: FutureBuilder(
-          future: movieProvider.getPopularMovies(),
-          builder: (context,
-              AsyncSnapshot<
-                      List<
-                          PopularMovies$Query$Movies$MovieConnection$MovieEdge>>
-                  snapshot) {
-            if (snapshot.hasData) {
-              return ListView.builder(
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (context, index) {
-                    return Text(snapshot.data[index].node.originalTitle);
-                  });
-            } else {
-              return CircularProgressIndicator();
-            }
-          },
+            child: Column(
+          children: [
+            Expanded(
+              child: Container(
+                height: 200,
+                child: FutureBuilder(
+                  future: movieProvider.getPopularMovies(),
+                  builder: (context,
+                      AsyncSnapshot<
+                              List<
+                                  PopularMovies$Query$Movies$MovieConnection$MovieEdge$Movie>>
+                          snapshot) {
+                    if (snapshot.hasData) {
+                      return Column(
+                        children: [
+                          Text('Popular Movies'),
+                          ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: snapshot.data.length,
+                              itemBuilder: (context, index) {
+                                return Text(snapshot.data[index].originalTitle);
+                              }),
+                        ],
+                      );
+                    } else {
+                      return CircularProgressIndicator();
+                    }
+                  },
+                ),
+              ),
+            ),
+            SizedBox(height: 2),
+            Expanded(
+              child: Container(
+                height: 200,
+                child: FutureBuilder(
+                  future: movieProvider.getNowPlayingMovies(),
+                  builder: (context,
+                      AsyncSnapshot<
+                              List<
+                                  NowPlayingMovies$Query$Movies$MovieConnection$MovieEdge$Movie>>
+                          snapshot) {
+                    if (snapshot.hasData) {
+                      return Column(
+                        children: [
+                          Text('Popular Movies'),
+                          ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: snapshot.data.length,
+                              itemBuilder: (context, index) {
+                                return Text(snapshot.data[index].originalTitle);
+                              }),
+                        ],
+                      );
+                    } else {
+                      return CircularProgressIndicator();
+                    }
+                  },
+                ),
+              ),
+            ),
+          ],
         )),
       ),
     );

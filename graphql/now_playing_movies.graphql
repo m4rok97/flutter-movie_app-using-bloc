@@ -1,0 +1,20 @@
+query {
+  movies {
+    nowPlaying(first: 10) {
+      edges {
+        node {
+          id
+          budget
+          originalTitle
+          poster(size: Original)
+          backdrop(size: Original)
+        }
+      }
+      totalCount
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+    }
+  }
+}
