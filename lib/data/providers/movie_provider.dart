@@ -1,10 +1,13 @@
 import 'package:artemis/artemis.dart';
 import 'package:test_movie_app/data/models/movie_model.dart';
+import 'package:test_movie_app/data/providers/movie_provider_contract.dart';
 import 'package:test_movie_app/graphql/now_playing_movies.graphql.dart';
 import 'package:test_movie_app/graphql/popular_movies.graphql.dart';
 import 'package:test_movie_app/core/api_constants.dart' as apiConst;
 
-class MovieProvider {
+class MovieProvider extends MovieProviderContract {
+
+  @override
   Future<List<MovieModel>> getPopularMovies() async {
     final client = new ArtemisClient(apiConst.graphQlUrl);
 
@@ -18,7 +21,8 @@ class MovieProvider {
 
     return ans;
   }
-
+  
+  @override
   Future<List<MovieModel>> getNowPlayingMovies() async {
     final client = new ArtemisClient(apiConst.graphQlUrl);
 

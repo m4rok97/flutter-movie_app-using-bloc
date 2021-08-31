@@ -12,14 +12,19 @@ import 'domain/use_cases/get_now_playing_movies.dart';
 import 'domain/use_cases/get_now_playing_movies.dart';
 import 'graphql/now_playing_movies.graphql.dart';
 import 'graphql/popular_movies.graphql.dart';
+import 'di/get_it.dart' as getIt;
+import 'package:pedantic/pedantic.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  unawaited(getIt.init());
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   final GetNowPlayingMovies getNowPlayingMovies =
-      new GetNowPlayingMovies(MovieRepository(MovieProvider()));
+      getIt.getItInstance<GetNowPlayingMovies>();
   final GetPopularMovies getPopularMovies =
-      new GetPopularMovies(MovieRepository(MovieProvider()));
+      getIt.getItInstance<GetPopularMovies>();
 
   @override
   Widget build(BuildContext context) {
