@@ -5,6 +5,7 @@ import 'package:test_movie_app/data/repositories/movie_repository.dart';
 import 'package:test_movie_app/domain/repositories/movie_repository.dart';
 import 'package:test_movie_app/domain/use_cases/get_now_playing_movies.dart';
 import 'package:test_movie_app/domain/use_cases/get_popular_movies.dart';
+import 'package:test_movie_app/presentation/blocs/movie_carousel/movie_carousel_bloc.dart';
 
 final getItInstance = GetIt.I;
 
@@ -20,4 +21,7 @@ Future init() async {
 
   getItInstance.registerLazySingleton<GetNowPlayingMovies>(
       () => GetNowPlayingMovies(getItInstance()));
+
+  getItInstance.registerFactory(
+      () => MovieCarouselBloc(getPopularMovies: getItInstance()));
 }
