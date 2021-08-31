@@ -7,6 +7,7 @@ import 'package:test_movie_app/domain/use_cases/get_popular_movies.dart';
 
 import 'data/providers/movie_provider.dart';
 import 'domain/entities/movie_entity.dart';
+import 'domain/entities/no_params.dart';
 import 'domain/use_cases/get_now_playing_movies.dart';
 import 'domain/use_cases/get_now_playing_movies.dart';
 import 'graphql/now_playing_movies.graphql.dart';
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
               child: Container(
                 height: 200,
                 child: FutureBuilder(
-                  future: getPopularMovies.call(),
+                  future: getPopularMovies.call(NoParams()),
                   builder: (context,
                       AsyncSnapshot<Either<AppError, List<MovieEntity>>>
                           snapshot) {
@@ -71,7 +72,7 @@ class MyApp extends StatelessWidget {
               child: Container(
                 height: 200,
                 child: FutureBuilder(
-                  future: getNowPlayingMovies.call(),
+                  future: getNowPlayingMovies.call(NoParams()),
                   builder: (context,
                       AsyncSnapshot<Either<AppError, List<MovieEntity>>>
                           snapshot) {

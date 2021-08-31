@@ -6,5 +6,8 @@ class AppError extends Equatable {
   const AppError(this.message);
 
   @override
-  List<Object> get props => throw UnimplementedError();
+  List<Object> get props => [message];
+
+  @override
+  bool get stringify => true;
 }
