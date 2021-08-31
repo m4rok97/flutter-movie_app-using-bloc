@@ -1,6 +1,8 @@
+import 'package:dartz/dartz.dart';
+import 'package:flutter/foundation.dart';
 import 'package:test_movie_app/data/models/movie_model.dart';
 import 'package:test_movie_app/data/providers/movie_provider.dart';
-import 'package:test_movie_app/domain/entities/movie_entity.dart';
+import 'package:test_movie_app/domain/entities/app_error.dart';
 import 'package:test_movie_app/domain/repositories/movie_repository.dart';
 
 class MovieRepository extends MovieRepositoryContract {
@@ -9,22 +11,22 @@ class MovieRepository extends MovieRepositoryContract {
   MovieRepository(this.movieProvider);
 
   @override
-  Future<List<MovieModel>> getPopularMovies() {
+  Future<Either<AppError, List<MovieModel>>> getPopularMovies() async {
     try {
-      final movies = movieProvider.getPopularMovies();
-      return movies;
+      final movies = await movieProvider.getPopularMovies();
+      return Right(movies);
     } on Exception {
-      return null;
+      return Left(AppError('Something was wrong'));
     }
   }
 
   @override
-  Future<List<MovieModel>> getNowPlayingMovies() {
+  Future<Either<AppError, List<MovieModel>>> getNowPlayingMovies() async {
     try {
-      final movies = movieProvider.getNowPlayingMovies();
-      return movies;
+      final movies = await movieProvider.getNowPlayingMovies();
+      return Right(movies);
     } on Exception {
-      return null;
+      return Left(AppError('Something was wrong'));
     }
   }
 }
