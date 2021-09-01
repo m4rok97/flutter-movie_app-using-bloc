@@ -1,0 +1,22 @@
+query MovieDetail($movieId: ID) {
+  movies {
+    movie(id: $movieId) {
+      id
+      originalTitle
+      poster(size: Original)
+      backdrop(size: Original)
+      overview
+      credits {
+        cast {
+          character
+          id
+          value {
+            id
+            name
+            profilePicture(size: Original)
+          }
+        }
+      }
+    }
+  }
+}

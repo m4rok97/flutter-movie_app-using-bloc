@@ -14,6 +14,11 @@ targets:
             - schema: movies.schema.graphql
               queries_glob: graphql/now_playing_movies.graphql
               output: lib/graphql/now_playing_movies.dart
+            - schema: movies.schema.graphql
+              queries_glob: graphql/movie_detail.graphql
+              output: lib/graphql/movie_detail.dart
           scalar_mapping:
             - graphql_type: URL
+              dart_type: String
+            - graphql_type: ID
               dart_type: String
