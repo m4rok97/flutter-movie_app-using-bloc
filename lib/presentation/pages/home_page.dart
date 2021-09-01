@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test_movie_app/di/get_it.dart';
+import 'package:test_movie_app/presentation/blocs/movie_backdrop/movie_backdrop_bloc.dart';
 import 'package:test_movie_app/presentation/blocs/movie_carousel/movie_carousel_bloc.dart';
 import 'package:test_movie_app/presentation/themes/theme_color.dart';
 import 'package:test_movie_app/presentation/widgets/movie_app_bar.dart';
@@ -14,9 +15,16 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: MovieAppBar(),
-        body: BlocProvider(
-          create: (_) =>
-              getItInstance<MovieCarouselBloc>()..add(CarouseLoadEvent()),
+        body: MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (_) =>
+                  getItInstance<MovieCarouselBloc>()..add(CarouseLoadEvent()),
+            ),
+            BlocProvider(
+              create: (_) => (getItInstance<MovieBackdropBloc>()),
+            ),
+          ],
           child: HomeView(),
         ),
         bottomNavigationBar: MovieBottomNavigationBar());

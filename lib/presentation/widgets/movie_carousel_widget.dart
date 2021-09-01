@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test_movie_app/domain/entities/movie_entity.dart';
+import 'package:test_movie_app/presentation/blocs/movie_backdrop/movie_backdrop_bloc.dart';
+import 'package:test_movie_app/presentation/widgets/movie_backdrop_widget.dart';
 import 'package:test_movie_app/presentation/widgets/movie_card_widget.dart';
 
 class MovieCarouselWidget extends StatefulWidget {
@@ -19,7 +22,6 @@ class _MovieCarouselWidgetState extends State<MovieCarouselWidget> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _pageController = PageController(
         initialPage: widget.initialPage,
@@ -35,14 +37,21 @@ class _MovieCarouselWidgetState extends State<MovieCarouselWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return PageView.builder(
-      controller: _pageController,
-      itemBuilder: (context, index) {
-        final movie = widget.movies[index];
-        return MovieCardWidget(movieId: movie.id, posterPath: movie.poster);
-      },
-      pageSnapping: true,
-      itemCount: widget.movies?.length ?? 0,
-    );
+    return Stack(children: [
+      MovieBackdropWidget(),
+      PageView.builder(
+        controller: _pageController,
+        itemBuilder: (context, index) {
+          final movie = widget.movies[index];
+          return MovieCardWidget(movieId: movie.id, posterPath: movie.poster);
+        },
+        pageSnapping: true,
+        itemCount: widget.movies?.length ?? 0,
+        onPageChanged: (index) {
+          BlocProvider.of<MovieBackdropBloc>(context)
+              .add(MovieBackdropChangedEvent(widget.movies[index]));
+        },
+      ),
+    ]);
   }
 }
