@@ -14,7 +14,7 @@ class MovieCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 60.h),
+      padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 45.h),
       child: Material(
         borderRadius: BorderRadius.circular(16.w),
         elevation: 32,
@@ -23,7 +23,7 @@ class MovieCardWidget extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(16.w),
             child: CachedNetworkImage(
-              fit: BoxFit.cover,
+              fit: BoxFit.fill,
               imageUrl: '${ApiConstants.baseImageUrl}$posterPath',
             ),
           ),

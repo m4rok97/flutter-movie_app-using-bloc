@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:test_movie_app/domain/entities/movie_entity.dart';
 import 'package:test_movie_app/presentation/blocs/movie_backdrop/movie_backdrop_bloc.dart';
 import 'package:test_movie_app/presentation/widgets/movie_backdrop_widget.dart';
@@ -8,9 +9,14 @@ import 'package:test_movie_app/presentation/widgets/movie_card_widget.dart';
 class MovieCarouselWidget extends StatefulWidget {
   final List<MovieEntity> movies;
   final int initialPage;
-
+  final String title;
+  final bool useBackDrop;
   const MovieCarouselWidget(
-      {Key key, @required this.movies, @required this.initialPage})
+      {Key key,
+      @required this.movies,
+      @required this.initialPage,
+      @required this.title,
+      @required this.useBackDrop})
       : super(key: key);
 
   @override
@@ -38,7 +44,23 @@ class _MovieCarouselWidgetState extends State<MovieCarouselWidget> {
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
-      MovieBackdropWidget(),
+      widget.useBackDrop
+          ? MovieBackdropWidget()
+          : Container(
+              width: 0,
+              height: 0,
+            ),
+      Positioned(
+          left: ScreenUtil().screenWidth * 0.5 - widget.title.length * 5.w,
+          top: 20.h,
+          child: Text(
+            widget.title,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+            ),
+            textAlign: TextAlign.center,
+          )),
       PageView.builder(
         controller: _pageController,
         itemBuilder: (context, index) {
@@ -48,8 +70,9 @@ class _MovieCarouselWidgetState extends State<MovieCarouselWidget> {
         pageSnapping: true,
         itemCount: widget.movies?.length ?? 0,
         onPageChanged: (index) {
-          BlocProvider.of<MovieBackdropBloc>(context)
-              .add(MovieBackdropChangedEvent(widget.movies[index]));
+          if (widget.title == 'Now Playing')
+            BlocProvider.of<MovieBackdropBloc>(context)
+                .add(MovieBackdropChangedEvent(widget.movies[index]));
         },
       ),
     ]);
