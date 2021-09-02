@@ -43,7 +43,8 @@ class MovieProvider extends MovieProviderContract {
   Future<MovieDetailEntity> getMovieDetail(String id) async {
     final client = new ArtemisClient(ApiConstants.graphQlUrl);
 
-    final response = await client.execute(MovieDetailQuery());
+    final response = await client.execute(
+        MovieDetailQuery(variables: MovieDetailArguments(movieId: id)));
 
     final data = response.data;
 
