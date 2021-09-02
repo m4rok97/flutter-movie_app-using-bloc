@@ -75,6 +75,7 @@ MovieDetail$Query$Movies$Movie _$MovieDetail$Query$Movies$MovieFromJson(
     ..poster = json['poster'] as String
     ..backdrop = json['backdrop'] as String
     ..overview = json['overview'] as String
+    ..releaseDate = json['releaseDate'] as String
     ..credits = json['credits'] == null
         ? null
         : MovieDetail$Query$Movies$Movie$ICreditsWithPerson.fromJson(
@@ -89,6 +90,7 @@ Map<String, dynamic> _$MovieDetail$Query$Movies$MovieToJson(
       'poster': instance.poster,
       'backdrop': instance.backdrop,
       'overview': instance.overview,
+      'releaseDate': instance.releaseDate,
       'credits': instance.credits?.toJson(),
     };
 

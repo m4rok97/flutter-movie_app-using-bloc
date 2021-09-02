@@ -3,9 +3,11 @@ import 'package:test_movie_app/data/providers/movie_provider.dart';
 import 'package:test_movie_app/data/providers/movie_provider_contract.dart';
 import 'package:test_movie_app/data/repositories/movie_repository.dart';
 import 'package:test_movie_app/domain/repositories/movie_repository.dart';
+import 'package:test_movie_app/domain/use_cases/get_movie_detail.dart';
 import 'package:test_movie_app/domain/use_cases/get_now_playing_movies.dart';
 import 'package:test_movie_app/domain/use_cases/get_popular_movies.dart';
 import 'package:test_movie_app/presentation/blocs/movie_backdrop/movie_backdrop_bloc.dart';
+import 'package:test_movie_app/presentation/blocs/movie_detail/movie_detail_bloc.dart';
 import 'package:test_movie_app/presentation/blocs/now_playing_movie_carousel/now_playing_movie_carousel_bloc.dart';
 import 'package:test_movie_app/presentation/blocs/popular_movie_carousel/popular_movie_carousel_bloc.dart';
 
@@ -24,6 +26,9 @@ Future init() async {
   getItInstance.registerLazySingleton<GetNowPlayingMovies>(
       () => GetNowPlayingMovies(getItInstance()));
 
+  getItInstance.registerLazySingleton<GetMovieDetail>(
+      () => GetMovieDetail(getItInstance()));
+
   getItInstance.registerLazySingleton(() => MovieBackdropBloc());
 
   getItInstance.registerFactory(() => NowPlayingMovieCarouselBloc(
@@ -32,4 +37,7 @@ Future init() async {
 
   getItInstance.registerFactory(
       () => PopularMovieCarouselBloc(getPopularMovies: getItInstance()));
+
+  getItInstance
+      .registerFactory(() => MovieDetailBloc(getMovieDetail: getItInstance()));
 }

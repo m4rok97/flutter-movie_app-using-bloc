@@ -22,3 +22,5 @@ targets:
               dart_type: String
             - graphql_type: ID
               dart_type: String
+            - graphql_type: Date
+              dart_type: String

@@ -92,11 +92,13 @@ class MovieDetail$Query$Movies$Movie with EquatableMixin {
 
   String overview;
 
+  String releaseDate;
+
   MovieDetail$Query$Movies$Movie$ICreditsWithPerson credits;
 
   @override
   List<Object> get props =>
-      [id, originalTitle, poster, backdrop, overview, credits];
+      [id, originalTitle, poster, backdrop, overview, releaseDate, credits];
   Map<String, dynamic> toJson() => _$MovieDetail$Query$Movies$MovieToJson(this);
 }
 
@@ -213,6 +215,12 @@ class MovieDetailQuery
                           selectionSet: null),
                       FieldNode(
                           name: NameNode(value: 'overview'),
+                          alias: null,
+                          arguments: [],
+                          directives: [],
+                          selectionSet: null),
+                      FieldNode(
+                          name: NameNode(value: 'releaseDate'),
                           alias: null,
                           arguments: [],
                           directives: [],

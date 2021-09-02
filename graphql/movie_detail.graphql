@@ -6,6 +6,7 @@ query MovieDetail($movieId: ID) {
       poster(size: Original)
       backdrop(size: Original)
       overview
+      releaseDate
       credits {
         cast {
           character
