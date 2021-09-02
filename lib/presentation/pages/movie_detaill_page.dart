@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:test_movie_app/di/get_it.dart';
 import 'package:test_movie_app/presentation/blocs/movie_detail/movie_detail_bloc.dart';
+import 'package:test_movie_app/presentation/widgets/actor_carousel_widget.dart';
 import 'package:test_movie_app/presentation/widgets/movie_app_bar.dart';
 
 class MovieDetailPage extends StatelessWidget {
@@ -15,7 +16,9 @@ class MovieDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MovieAppBar(),
+      appBar: MovieAppBar(
+        isHomePage: false,
+      ),
       body: BlocProvider(
         create: (_) => getItInstance<MovieDetailBloc>()
           ..add(MovieDetailLoadEvent(movieDetailPageArguments.movieId)),
@@ -105,37 +108,16 @@ class MovieDetailView extends StatelessWidget {
               ),
               Container(
                 width: ScreenUtil().screenWidth,
-                height: ScreenUtil().screenHeight * 0.2,
-                color: Colors.amber,
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: ScreenUtil().screenHeight * 0.2,
-                      child: PageView(
-                        pageSnapping: true,
-                        children: [
-                          Container(
-                            height: 10,
-                            width: 10,
-                            color: Colors.black,
-                          ),
-                          Container(
-                            height: 10,
-                            width: 10,
-                            color: Colors.red,
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+                height: ScreenUtil().screenHeight * 0.4,
+                child: ActorCarouselWidget(
+                    actors: state.movieDetailEntity.actors, initialPage: 1),
               )
             ],
           ),
         );
       }
 
-      return CircularProgressIndicator();
+      return Center(child: CircularProgressIndicator());
     });
   }
 }

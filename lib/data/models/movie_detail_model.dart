@@ -1,26 +1,31 @@
+import 'package:test_movie_app/data/models/actor_model.dart';
+import 'package:test_movie_app/domain/entities/actor_entity.dart';
 import 'package:test_movie_app/domain/entities/movie_detail_entity.dart';
 import 'package:test_movie_app/graphql/movie_detail.dart';
 
 class MovieDetailModel extends MovieDetailEntity {
-  String id;
+  final String id;
 
-  String originalTitle;
+  final String originalTitle;
 
-  String poster;
+  final String poster;
 
-  String backdrop;
+  final String backdrop;
 
-  String overview;
+  final String overview;
 
-  String releaseDate;
+  final String releaseDate;
 
-  MovieDetailModel(
+  final List<ActorEntity> actors;
+
+  const MovieDetailModel(
       {this.id,
       this.originalTitle,
       this.poster,
       this.backdrop,
       this.overview,
-      this.releaseDate});
+      this.releaseDate,
+      this.actors});
 
   factory MovieDetailModel.fromMovieDetailModel(
       MovieDetail$Query$Movies$Movie model) {
@@ -30,6 +35,9 @@ class MovieDetailModel extends MovieDetailEntity {
         originalTitle: model.originalTitle,
         poster: model.poster,
         backdrop: model.backdrop,
-        releaseDate: model.releaseDate);
+        releaseDate: model.releaseDate,
+        actors: model.credits.cast
+            .map((e) => ActorModel.fromMovieDetailModel(e.value))
+            .toList());
   }
 }

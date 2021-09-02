@@ -1,17 +1,30 @@
 import 'package:equatable/equatable.dart';
+import 'package:meta/meta.dart';
+import 'package:test_movie_app/domain/entities/actor_entity.dart';
 
 class MovieDetailEntity extends Equatable {
-  String id;
+  final String id;
 
-  String originalTitle;
+  final String originalTitle;
 
-  String poster;
+  final String poster;
 
-  String backdrop;
+  final String backdrop;
 
-  String overview;
+  final String overview;
 
-  String releaseDate;
+  final String releaseDate;
+
+  final List<ActorEntity> actors;
+
+  const MovieDetailEntity(
+      {@required this.id,
+      @required this.originalTitle,
+      @required this.poster,
+      @required this.backdrop,
+      @required this.overview,
+      @required this.releaseDate,
+      @required this.actors});
 
   @override
   List<Object> get props => [id, originalTitle];

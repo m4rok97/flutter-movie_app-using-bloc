@@ -14,7 +14,9 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: MovieAppBar(),
+        appBar: MovieAppBar(
+          isHomePage: true,
+        ),
         body: MultiBlocProvider(
           providers: [
             BlocProvider(
